@@ -2,6 +2,7 @@ package Service;
 
 import Entity.User;
 import Repository.UserRepository;
+import com.example.leave.request.enums.UserStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,32 +11,41 @@ public class UserService {
     @Autowired
    private UserRepository repo;
     //create the Employee
-    public createUser(User user)
+    public User createUser(String id)
     {
-
+      User user=repo.findById(id);
+      user.setStatus(UserStatus.ACTIVE);
+      user.setRole(Role.Employee);
         return repo.save(user);
     }
    //create manager
-    public createManager(String id)
+    public User createManager(String id)
     {
 
-        User user=repo.findUserById(id);
-        if("manager".equals(user.getRole()))
-            return repo.save(user);
-        return  null;
+        User user=repo.findById(id);
+        user.setRole(Role.Manager);
+        return  repo.save(user);
     }
     //get user by id;
-    public getUserById(String id)
+    public User getUserById(String id)
     {
-       return repo.findById(id);
+        User user=repo.findById(id);
+       return repo.find(user).orElseThrow(()-> new RuntimeException("user not found by"+id));
 
     }
     //get manager by id
-    public getManagerById(String id)
+    public User getManagerById(String id)
     {
-        User user=repo.findUserById(id);
-        if("manager".equals(user.getRole()))
+        User user=repo.findById(id);
+        if(user.getRole()==Role.Manager)
             return user;
-        return null;
+        throw new RuntimeException("User is not manager");
+    }
+    //delete the user
+    public void removeUser(String id)
+    {
+        User user=repo.findUserById(id).orElseThrow(() -> new RuntimeException("User not found"+id));
+        user.setStatus(UserStatus.INACTIVE);
+        repo.save(user);
     }
 }
