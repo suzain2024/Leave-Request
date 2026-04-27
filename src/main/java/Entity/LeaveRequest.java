@@ -3,6 +3,11 @@
  */
 package Entity;
 
+import com.example.leave.request.enums.LeaveStatus;
+import com.example.leave.request.enums.LeaveType;
+import com.example.leave.request.enums.UserStatus;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,8 +27,9 @@ public class LeaveRequest {
     private Long id;
     private LocalDate start;
     private LocalDate end;
-    private String status;
-    private String type;
+    private LeaveStatus status;
+    @Enumerated(EnumType.STRING)
+    private LeaveType type;
     private  int day;
     @ManyToOne
     private User user;

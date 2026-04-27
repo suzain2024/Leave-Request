@@ -13,7 +13,7 @@ import lombok.Data;
 @Entity
 @Data
 public class Department {
-    private String dept_name;
+    private String deptName;
     @Id
-    private String dept_id;
+    private String deptId;
 }

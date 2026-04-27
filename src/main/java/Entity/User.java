@@ -3,6 +3,7 @@
  */
 package Entity;
 
+import com.example.leave.request.enums.Role;
 import jakarta.persistence.*;
 
 /**
@@ -12,13 +13,14 @@ import jakarta.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-String id;
+Long id;
 String name;
 String password;
+@Column(unique = true)
 String email;
 @ManyToOne
-private Department department;
+private Department department;//reference
 @ManyToOne
-private User manager;
-String role;
+private User manager;//reference
+private Role role;
 }

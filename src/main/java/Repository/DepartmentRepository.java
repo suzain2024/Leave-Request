@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * 
  */
-public interface DepartmentRepository extends JpaRepository<Department,Long> {
- Department findDepartmentById(String id);//with help of id
+public interface DepartmentRepository extends JpaRepository<Department,String> {
+ Department findByDepartmentId(String deptId);//with help of id
 }
